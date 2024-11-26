@@ -72,7 +72,7 @@ export let clone = message => {
  *
  * @param {HttpMessage} message
  *
- * @returns {[HttpMessage, Awaited<ReturnType<typeof readBody>>]}
+ * @returns {Promise<[HttpMessage, Awaited<ReturnType<typeof readBody>>]>}
  */
 export let read = message => {
   if (!['Request', 'Response'].some(kind => is(kind, message)))
