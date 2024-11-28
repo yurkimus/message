@@ -1,9 +1,21 @@
 import { is } from '@yurkimus/types'
 
+export let Methods = /** @type {const} */ ({
+  Get: 'GET',
+  Head: 'HEAD',
+  Post: 'POST',
+  Put: 'PUT',
+  Delete: 'DELETE',
+  Connect: 'CONNECT',
+  Options: 'OPTIONS',
+  Trace: 'TRACE',
+  Patch: 'PATCH',
+})
+
 /**
  * @param {Request | Response} message
  */
-export let mediaType = message => {
+export let media = message => {
   if (!['Request', 'Response'].some(kind => is(kind, message)))
     throw new TypeError(
       `Parameter 'message' must be on of: `
@@ -22,14 +34,14 @@ export let mediaType = message => {
  *
  * @returns {Promise<string | FormData | object | any[]>}
  */
-export let readBody = message => {
+export let body = message => {
   if (!['Request', 'Response'].some(kind => is(kind, message)))
     throw new TypeError(
       `Parameter 'message' must be on of: `
         + `'${['Request', 'Response'].join(', ')}'.`,
     )
 
-  switch (mediaType(message)) {
+  switch (media(message)) {
     case '':
       return null
 
@@ -45,7 +57,7 @@ export let readBody = message => {
 
     default:
       throw new TypeError(
-        `No handler found for media-type '${mediaType(message)}'.`,
+        `No handler found for media-type '${media(message)}'.`,
       )
   }
 }
@@ -72,7 +84,7 @@ export let clone = message => {
  *
  * @param {HttpMessage} message
  *
- * @returns {Promise<[HttpMessage, Awaited<ReturnType<typeof readBody>>]>}
+ * @returns {Promise<[HttpMessage, Awaited<ReturnType<typeof body>>]>}
  */
 export let read = message => {
   if (!['Request', 'Response'].some(kind => is(kind, message)))
@@ -84,6 +96,6 @@ export let read = message => {
   return Promise
     .resolve(message)
     .then(clone)
-    .then(([message, clone]) => [message, readBody(clone)])
+    .then(([message, clone]) => [message, body(clone)])
     .then(Promise.all.bind(Promise))
 }

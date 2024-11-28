@@ -4,18 +4,24 @@ Set of HTTP-message utilities.
 
 ## Exports
 
-### mediaType
+### Methods
 
 ```
-mediaType = (message: Request | Response) =>
+Methods = { [string]: string }
+```
+
+### media
+
+```
+media = (message: Request | Response) =>
   | TypeError
   | String
 ```
 
-### readBody
+### body
 
 ```
-readBody = (message: Request | Response) =>
+body = (message: Request | Response) =>
   | TypeError
   | Null
   | Promise<String>
@@ -37,5 +43,5 @@ clone = (message: Request | Response) =>
 ```
 read = (message: Request | Response) =>
   | TypeError
-  | [message: Request | Response, body: ReturnType<readBody>]
+  | [message: Request | Response, body: ReturnType<body>]
 ```

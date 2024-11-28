@@ -2,8 +2,8 @@
   "type": "module",
 
   "name": "@yurkimus/message",
+  "version": "0.0.2",
 
-  "version": "0.0.1",
   "author": "yurkimus <yurkimus@gmail.com>",
 
   "repository": {
