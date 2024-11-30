@@ -1,6 +1,11 @@
 import { is } from '@yurkimus/types'
 
-export let Methods = /** @type {const} */ ({
+/**
+ * HTTP-methods enumeration
+ *
+ * @see https://httpwg.org/specs/rfc9110.html#methods
+ */
+export let Methods = {
   Get: 'GET',
   Head: 'HEAD',
   Post: 'POST',
@@ -10,10 +15,10 @@ export let Methods = /** @type {const} */ ({
   Options: 'OPTIONS',
   Trace: 'TRACE',
   Patch: 'PATCH',
-})
+}
 
 /**
- * @param {Request | Response} message
+ * Get the media-type of HTTP-message
  */
 export let media = message => {
   if (!['Request', 'Response'].some(kind => is(kind, message)))
@@ -30,9 +35,7 @@ export let media = message => {
 }
 
 /**
- * @param {Request | Response} message
- *
- * @returns {Promise<string | FormData | object | any[]>}
+ * Parse the body of HTTP-message
  */
 export let body = message => {
   if (!['Request', 'Response'].some(kind => is(kind, message)))
@@ -43,7 +46,7 @@ export let body = message => {
 
   switch (media(message)) {
     case '':
-      return null
+      return Promise.resolve(null)
 
     case 'text/plain':
       return message.text()
@@ -63,11 +66,7 @@ export let body = message => {
 }
 
 /**
- * @template {Request | Response} HttpMessage
- *
- * @param {HttpMessage} message
- *
- * @returns {[message: HttpMessage, clone: HttpMessage]}
+ * Clone HTTP-message
  */
 export let clone = message => {
   if (!['Request', 'Response'].some(kind => is(kind, message)))
@@ -80,11 +79,7 @@ export let clone = message => {
 }
 
 /**
- * @template {Request | Response} HttpMessage
- *
- * @param {HttpMessage} message
- *
- * @returns {Promise<[HttpMessage, Awaited<ReturnType<typeof body>>]>}
+ * Clone and read the body of HTTP-mesage
  */
 export let read = message => {
   if (!['Request', 'Response'].some(kind => is(kind, message)))
