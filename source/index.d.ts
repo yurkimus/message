@@ -29,4 +29,4 @@ export let clone: <
 
 export let read: <
   Message extends Request | Response,
->(message: Message) => [Message, Awaited<ReturnType<typeof body>>]
+>(message: Message) => Promise<[Message, Awaited<ReturnType<typeof body>>]>
