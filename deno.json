@@ -1,5 +1,5 @@
 {
-  "version": "0.0.5",
+  "version": "0.0.6",
 
   "imports": {
     "@yurkimus/types": "https://raw.githubusercontent.com/yurkimus/types/main/source/index.js"
