@@ -2,7 +2,7 @@
   "type": "module",
 
   "name": "@yurkimus/message",
-  "version": "0.0.3",
+  "version": "0.0.4",
 
   "author": "yurkimus <yurkimus@gmail.com>",
 
@@ -11,7 +11,12 @@
     "url": "https://github.com/yurkimus/message.git"
   },
 
-  "exports": "./source/index.js",
+  "exports": {
+    ".": {
+      "types": "./source/index.d.ts",
+      "import": "./source/index.js"
+    }
+  },
 
   "dependencies": {
     "@yurkimus/types": "npm:@yurkimus/types"
