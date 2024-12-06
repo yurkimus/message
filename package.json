@@ -10,7 +10,7 @@
   "exports": {
     ".": {
       "types": "./source/index.d.ts",
-      "edge-light": "./source/index.js",
+      "edge-light": "./source/edge-light/index.js",
       "import": "./source/index.js"
     }
   },
