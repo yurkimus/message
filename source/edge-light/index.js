@@ -1,6 +1,21 @@
-import {media} from "../index.js";
-
 export * from "../index.js"
+
+/**
+ * Get the media-type of HTTP-message
+ */
+export let media = message => {
+  for (let property of ['headers']) {
+    if (!(property in message)) throw new TypeError(
+      `Parameter ‘message’ must have ‘headers’ property.`
+    )
+  }
+
+  return message.headers
+      .get('Content-Type')
+      ?.split(';')
+      ?.at(0)
+    ?? ''
+}
 
 /**
  * Parse the body of HTTP-message
