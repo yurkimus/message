@@ -1,19 +1,18 @@
-export * from "../index.js"
+export * from '../index.js'
 
 /**
  * Get the media-type of HTTP-message
  */
 export let media = message => {
-  for (let property of ['headers']) {
-    if (!(property in message)) throw new TypeError(
-      `Parameter ‘message’ must have ‘headers’ property.`
+  if (!('headers' in message))
+    throw new TypeError(
+      `Parameter ‘message’ must have ‘headers’ property.`,
     )
-  }
 
   return message.headers
-      .get('Content-Type')
-      ?.split(';')
-      ?.at(0)
+    .get('Content-Type')
+    ?.split(';')
+    ?.at(0)
     ?? ''
 }
 
@@ -21,11 +20,11 @@ export let media = message => {
  * Parse the body of HTTP-message
  */
 export let body = message => {
-  for (let property of ['text', 'json', 'formData']) {
-    if (!(property in message && typeof message[property] === "function")) throw new TypeError(
-      `Parameter 'message' must have ‘text’, ‘json’ and ‘formData’ methods.`
-    )
-  }
+  for (let property of ['text', 'json', 'formData'])
+    if (!(property in message && typeof message[property] === 'function'))
+      throw new TypeError(
+        `Parameter 'message' must have ‘text’, ‘json’ and ‘formData’ methods.`,
+      )
 
   switch (media(message)) {
     case '':
@@ -52,11 +51,11 @@ export let body = message => {
  * Clone HTTP-message
  */
 export let clone = message => {
-  for (let property of ['clone']) {
-    if (!(property in message && typeof message[property] === "function")) throw new TypeError(
-      `Parameter ‘message’ must have ‘clone’ method.`
-    )
-  }
+  for (let property of ['clone'])
+    if (!(property in message && typeof message[property] === 'function'))
+      throw new TypeError(
+        `Parameter ‘message’ must have ‘clone’ method.`,
+      )
 
   return [message, message.clone()]
 }
@@ -64,10 +63,9 @@ export let clone = message => {
 /**
  * Clone and read the body of HTTP-mesage
  */
-export let read = message => {
-  return Promise
+export let read = message =>
+  Promise
     .resolve(message)
     .then(clone)
     .then(([message, clone]) => [message, body(clone)])
     .then(Promise.all.bind(Promise))
-}
