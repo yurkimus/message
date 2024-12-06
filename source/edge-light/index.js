@@ -65,7 +65,6 @@ export let clone = message => {
  * Clone and read the body of HTTP-mesage
  */
 export let read = message => {
-  console.log('EdgeRuntime test')
   return Promise
     .resolve(message)
     .then(clone)
