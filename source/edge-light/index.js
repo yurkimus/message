@@ -1,4 +1,3 @@
-import {is} from '@yurkimus/types'
 import {media} from "../index.js";
 
 export * from "../index.js"
@@ -7,13 +6,9 @@ export * from "../index.js"
  * Parse the body of HTTP-message
  */
 export let body = message => {
-
-  console.log('EdgeRuntime test')
-
   for (let property of ['text', 'json', 'formData']) {
     if (!(property in message && typeof message[property] === "function")) throw new TypeError(
-      `Parameter 'message' must be on of: `
-      + `'${['Request', 'Response'].join(', ')}'.`,
+      `Parameter 'message' must have ‘text’, ‘json’ and ‘formData’ methods.`
     )
   }
 
@@ -42,11 +37,11 @@ export let body = message => {
  * Clone HTTP-message
  */
 export let clone = message => {
-  if (!['Request', 'Response'].some(kind => is(kind, message)))
-    throw new TypeError(
-      `Parameter 'message' must be on of: `
-      + `'${['Request', 'Response'].join(', ')}'.`,
+  for (let property of ['clone']) {
+    if (!(property in message && typeof message[property] === "function")) throw new TypeError(
+      `Parameter ‘message’ must have ‘clone’ method.`
     )
+  }
 
   return [message, message.clone()]
 }
@@ -55,12 +50,7 @@ export let clone = message => {
  * Clone and read the body of HTTP-mesage
  */
 export let read = message => {
-  if (!['Request', 'Response'].some(kind => is(kind, message)))
-    throw new TypeError(
-      `Parameter 'message' must be on of: `
-      + `'${['Request', 'Response'].join(', ')}'.`,
-    )
-
+  console.log('EdgeRuntime test')
   return Promise
     .resolve(message)
     .then(clone)
