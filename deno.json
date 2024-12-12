@@ -1,5 +1,11 @@
 {
-  "version": "0.0.11",
+  "name": "@yurkimus/message",
+  "version": "0.0.12",
+
+  "exports": {
+    ".": "./source/index.js",
+    "./enumerations/*": "./enumerations/*.js"
+  },
 
   "imports": {
     "@yurkimus/curry": "npm:@yurkimus/curry@0.1.0",
