@@ -1,23 +1,6 @@
 import { is } from '@yurkimus/types'
 
 /**
- * HTTP-methods enumeration
- *
- * @see https://httpwg.org/specs/rfc9110.html#methods
- */
-export let Methods = {
-  Get: 'GET',
-  Head: 'HEAD',
-  Post: 'POST',
-  Put: 'PUT',
-  Delete: 'DELETE',
-  Connect: 'CONNECT',
-  Options: 'OPTIONS',
-  Trace: 'TRACE',
-  Patch: 'PATCH',
-}
-
-/**
  * Get the media-type of HTTP-message
  */
 export let media = message => {
