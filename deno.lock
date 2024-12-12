@@ -19,10 +19,12 @@
   },
   "workspace": {
     "dependencies": [
+      "npm:@yurkimus/curry@0.1.0",
       "npm:@yurkimus/types@0.2.2"
     ],
     "packageJson": {
       "dependencies": [
+        "npm:@yurkimus/curry@0.1.0",
         "npm:@yurkimus/types@0.2.2"
       ]
     }

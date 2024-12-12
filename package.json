@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "@yurkimus/message",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "author": "yurkimus <yurkimus@gmail.com>",
   "repository": {
     "type": "git",
@@ -16,13 +16,10 @@
     "./enumerations/*": {
       "types": "./enumerations/*.d.ts",
       "import": "./enumerations/*.js"
-    },
-    "./prototypes/*": {
-      "types": "./prototypes/*.d.ts",
-      "import": "./prototypes/*.js"
     }
   },
   "dependencies": {
+    "@yurkimus/curry": "0.1.0",
     "@yurkimus/types": "0.2.2"
   }
 }
