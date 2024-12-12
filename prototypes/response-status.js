@@ -22,8 +22,6 @@ export function ResponseStatus(value) {
     .at(1)
 }
 
-ResponseStatus.of = ResponseStatus
-
 ResponseStatus.has = ResponseStatusEnum
   .has
   .bind(ResponseStatusEnum)

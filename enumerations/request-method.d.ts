@@ -1,6 +1,4 @@
-export let RequestMethodEnum: Map<Methods | MethodTexts, Methods | MethodTexts>
-
-export type Methods =
+export type MethodTexts =
   | 'GET'
   | 'HEAD'
   | 'POST'
@@ -11,7 +9,7 @@ export type Methods =
   | 'TRACE'
   | 'PATCH'
 
-export type MethodTexts =
+export type Methods =
   | 'Get'
   | 'Head'
   | 'Post'
@@ -21,3 +19,8 @@ export type MethodTexts =
   | 'Options'
   | 'Trace'
   | 'Patch'
+
+export let RequestMethodEnum: Map<
+  MethodTexts | Methods,
+  MethodTexts | Methods
+>
