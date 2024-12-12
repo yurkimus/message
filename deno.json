@@ -1,5 +1,5 @@
 {
-  "version": "0.0.9",
+  "version": "0.0.10",
 
   "imports": {
     "@yurkimus/types": "npm:@yurkimus/types@0.2.2"
