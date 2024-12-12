@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "@yurkimus/message",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "author": "yurkimus <yurkimus@gmail.com>",
   "repository": {
     "type": "git",
@@ -13,9 +13,9 @@
       "import": "./source/index.js",
       "edge-light": "./source/edge-light/index.js"
     },
-    "./enumerations/*": {
-      "types": "./enumerations/*.d.ts",
-      "import": "./enumerations/*.js"
+    "./enumerations/request-method": {
+      "types": "./enumerations/request-method.d.ts",
+      "import": "./enumerations/request-method.js"
     }
   },
   "dependencies": {

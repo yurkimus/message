@@ -1,10 +1,10 @@
 {
   "name": "@yurkimus/message",
-  "version": "0.0.12",
+  "version": "0.0.13",
 
   "exports": {
     ".": "./source/index.js",
-    "./enumerations/*": "./enumerations/*.js"
+    "./enumerations/request-method": "./enumerations/request-method.js"
   },
 
   "imports": {
