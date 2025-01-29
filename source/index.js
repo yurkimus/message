@@ -27,9 +27,12 @@ export let body = message => {
         + `'${['Request', 'Response'].join(', ')}'.`,
     )
 
+  if (is('Null', message.body))
+    return null
+
   switch (media(message)) {
     case '':
-      return Promise.resolve(null)
+      return null
 
     case 'text/plain':
       return message.text()

@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "@yurkimus/message",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "author": "yurkimus <yurkimus@gmail.com>",
   "repository": {
     "type": "git",
@@ -19,7 +19,6 @@
     }
   },
   "dependencies": {
-    "@yurkimus/curry": "0.1.0",
-    "@yurkimus/types": "0.2.2"
+    "@yurkimus/types": "0.2.3"
   }
 }
