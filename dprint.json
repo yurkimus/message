@@ -6,7 +6,7 @@
     "useTabs": false,
     "useBraces": "maintain",
     "arrowFunction.useParentheses": "preferNone",
-    "lineWidth": 80
+    "lineWidth": 120
   },
 
   "json": {

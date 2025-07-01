@@ -1,82 +1,75 @@
-import { is } from '@yurkimus/types'
+/**
+ * @typedef {typeof Parsers[number]} Parser
+ */
+
+export var Parsers = /** @type {const} */ ([
+  'arrayBuffer',
+  'blob',
+  'bytes',
+  'formData',
+  'json',
+  'text',
+])
 
 /**
- * Get the media-type of HTTP-message
+ * @type {Record<typeof Parsers[number], string[]>}
  */
-export let media = message => {
-  if (!['Request', 'Response'].some(kind => is(kind, message)))
-    throw new TypeError(
-      `Parameter 'message' must be on of: `
-        + `'${['Request', 'Response'].join(', ')}'.`,
-    )
+export var ParserMimes = {
+  'arrayBuffer': [],
 
-  return message.headers
-    .get('Content-Type')
-    ?.split(';')
-    ?.at(0)
-    ?? ''
-}
+  'blob': [],
 
-/**
- * Parse the body of HTTP-message
- */
-export let body = message => {
-  if (!['Request', 'Response'].some(kind => is(kind, message)))
-    throw new TypeError(
-      `Parameter 'message' must be on of: `
-        + `'${['Request', 'Response'].join(', ')}'.`,
-    )
+  'bytes': [],
 
-  if (is('Null', message.body))
-    return null
+  'formData': [
+    'multipart/form-data',
+    'application/x-www-form-urlencoded',
+  ],
 
-  switch (media(message)) {
-    case '':
-      return null
+  'json': [
+    'application/json',
+  ],
 
-    case 'text/plain':
-      return message.text()
-
-    case 'application/json':
-      return message.json()
-
-    case 'multipart/form-data':
-    case 'application/x-www-form-urlencoded':
-      return message.formData()
-
-    default:
-      throw new TypeError(
-        `No handler found for media-type '${media(message)}'.`,
-      )
-  }
-}
-
-/**
- * Clone HTTP-message
- */
-export let clone = message => {
-  if (!['Request', 'Response'].some(kind => is(kind, message)))
-    throw new TypeError(
-      `Parameter 'message' must be on of: `
-        + `'${['Request', 'Response'].join(', ')}'.`,
-    )
-
-  return [message, message.clone()]
+  'text': [
+    'text/plain',
+    'text/html',
+  ],
 }
 
 /**
  * Clone and read the body of HTTP-mesage
+ *
+ * @template {Response | Request} Message
+ * @template Result
+ *
+ * @param {Message} message
+ *
+ * @returns {Promise<[Message, Result]>}
  */
-export let read = message => {
-  if (!['Request', 'Response'].some(kind => is(kind, message)))
-    throw new TypeError(
-      `Parameter 'message' must be on of: `
-        + `'${['Request', 'Response'].join(', ')}'.`,
-    )
+export var readMessage = message => {
+  let mime = message.headers.get('Content-Type')?.split(';')?.at(0) ?? ''
 
-  return Promise
-    .resolve(message)
-    .then(clone)
-    .then(([message, clone]) => [message, body(clone)])
-    .then(Promise.all.bind(Promise))
+  for (let parser of Parsers)
+    if (ParserMimes[parser].some(x => mime.includes(x)))
+      return Promise.all([message, message[parser]()])
+
+  return Promise.all([message, message.text()])
+}
+
+/**
+ * @template {Response | Request} Message
+ * @template Result
+ *
+ * @param {[Message, Result]} param
+ */
+export var resolveMessage = ([message, value]) => {
+  let ok = message?.ok ?? true
+
+  switch (ok) {
+    case true:
+      return value
+
+    default:
+      throw value
+  }
 }

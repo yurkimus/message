@@ -11,105 +11,78 @@ Set of HTTP-message utilities.
 ## Installation
 
 ```
-npm install @yurkimus/message
+npm install @yurkimus/message@latest -E
 ```
 
 ```
-deno add npm:@yurkimus/message
+deno add npm:@yurkimus/message@latest
 ```
 
 ## Exports
 
-Enumerations:
-
-- [RequestMethodsEnum](#RequestMethodsEnum)
-- [ResponseStatusEnum](#ResponseStatusEnum)
-
-Prototypes:
-
-- [ResponseStatus](#ResponseStatus)
-
 Source:
 
-- [media](#media)
-- [body](#body)
-- [clone](#clone)
-- [read](#read)
+- [Parsers](#Parsers)
+- [ParserMimes](#ParserMimes)
+- [readMessage](#readMessage)
+- [resolveMessage](#resolveMessage)
 
 ## Imports
 
 ```js
 import * as message from '@yurkimus/message'
+
+import { readMessage, resolveMessage } from '@yurkimus/message'
 ```
 
-### RequestMethodsEnum
-
-```js
-import { RequestMethodsEnum } from '@yurkimus/message/enumerations/request-method'
-```
-
-```
-RequestMethodsEnum = Map<string, string>
-```
-
-### ResponseStatusEnum
+### Parsers
 
 ```js
-import { ResponseStatusEnum } from '@yurkimus/message/enumerations/response-status'
+import { Parsers } from '@yurkimus/message'
 ```
 
-```
-ResponseStatusEnum = Map<string, string>
-```
-
-### media
-
-```js
-import { media } from '@yurkimus/message'
+```ts
+type Parser = 'arrayBuffer' | 'blob' | 'bytes' | 'formData' | 'json' | 'text'
 ```
 
-```
-media = (message: Request | Response) =>
-  | TypeError
-  | String
-```
-
-### body
+### ParserMimes
 
 ```js
-import { body } from '@yurkimus/message'
+import { ParserMimes } from '@yurkimus/message'
 ```
 
-```
-body = (message: Request | Response) =>
-  | TypeError
-  | Null
-  | Promise<String>
-  | Promise<Object>
-  | Promise<Array>
-  | Promise<FormData>
+```ts
+type ParserMimes = Record<Parser, string[]>
 ```
 
-### clone
+### readMessage
 
 ```js
-import { clone } from '@yurkimus/message'
+import { readMessage } from '@yurkimus/message'
+
+await readMessage(new Request('http://localhost')) // => [Request {}, '']
+
+await readMessage(Response('', { status: 400 })) // => [Response {}, '']
 ```
 
-```
-clone = (message: Request | Response) =>
-  | TypeError
-  | [message: Request | Response, clone: Request | Response]
+```ts
+type readMessage = <Message extends Response | Request, Result>(
+  message: Message,
+) => Promise<[Message, Result]>
 ```
 
-### read
+### resolveMessage
 
 ```js
-import { read } from '@yurkimus/message'
+import { resolveMessage } from '@yurkimus/message'
+
+await resolveMessage(new Request('http://localhost')) // => ''
+
+await resolveMessage(Response.json('', { status: 400 })) // => throws ''
 ```
 
-```
-read = (message: Request | Response) =>
-  | TypeError
-  | [message: Request | Response, body: ReturnType<body>]
+```ts
+type resolveMessage = <Message extends Response | Request, Result>(
+  [message, value]: [Message, Result],
+) => Result
 ```
