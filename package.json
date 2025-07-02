@@ -7,10 +7,5 @@
     "type": "git",
     "url": "https://github.com/yurkimus/message.git"
   },
-  "exports": {
-    ".": {
-      "types": "./source/index.d.ts",
-      "import": "./source/index.js"
-    }
-  }
+  "exports": "./source/index.js"
 }
