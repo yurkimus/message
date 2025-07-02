@@ -1,7 +1,3 @@
-/**
- * @typedef {typeof Parsers[number]} Parser
- */
-
 export var Parsers = /** @type {const} */ ([
   'arrayBuffer',
   'blob',
