@@ -54,18 +54,20 @@ export var readMessage = message => {
 
 /**
  * @template {Response | Request} Message
- * @template Result
+ * @template Value
  *
- * @param {[Message, Result]} param
+ * @param {[Message, Value]} param
+ *
+ * @returns {[Message, Value]}
  */
 export var resolveMessage = ([message, value]) => {
   let ok = message?.ok ?? true
 
   switch (ok) {
     case true:
-      return value
+      return [message, value]
 
     default:
-      throw value
+      throw [message, value]
   }
 }
