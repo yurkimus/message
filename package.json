@@ -1,14 +1,14 @@
 {
   "type": "module",
   "name": "@yurkimus/message",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "author": "yurkimus <yurkimus@gmail.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/yurkimus/message.git"
   },
   "scripts": {
-    "type": "tsc --emitdeclarationonly --declaration --allowjs ./source/*"
+    "type": "tsc --emitdeclarationonly --declaration --allowjs ./source/index.js"
   },
   "exports": {
     ".": {
