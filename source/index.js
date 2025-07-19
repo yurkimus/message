@@ -58,7 +58,7 @@ export var readMessage = message => {
  *
  * @param {[Message, Value]} param
  *
- * @returns {[Message, Value]}
+ * @returns {Value}
  */
 export var resolveMessage = ([message, value]) => {
   let ok = message?.ok ?? true
