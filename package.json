@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "@yurkimus/message",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "author": "yurkimus <yurkimus@gmail.com>",
   "repository": {
     "type": "git",
@@ -12,8 +12,8 @@
   },
   "exports": {
     ".": {
-      "default": "./source/index.js",
-      "types": "./source/index.d.ts"
+      "types": "./source/index.d.ts",
+      "default": "./source/index.js"
     }
   }
 }
