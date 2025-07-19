@@ -65,9 +65,13 @@ export var resolveMessage = ([message, value]) => {
 
   switch (ok) {
     case true:
-      return [message, value]
+      return value
 
     default:
-      throw [message, value]
+      throw {
+        status: message.status,
+        statusText: message.statusText,
+        description: value?.description ?? value ?? '',
+      }
   }
 }
