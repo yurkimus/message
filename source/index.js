@@ -71,7 +71,7 @@ export var resolveMessage = ([message, value]) => {
       throw {
         status: message.status,
         statusText: message.statusText,
-        description: value?.description ?? value ?? '',
+        message: value?.message ?? value ?? '',
       }
   }
 }
