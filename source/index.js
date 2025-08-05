@@ -68,10 +68,32 @@ export var resolveMessage = ([message, value]) => {
       return value
 
     default:
-      throw {
-        status: message.status,
-        statusText: message.statusText,
-        message: value?.message ?? value ?? '',
+      switch (typeof value) {
+        case 'bigint':
+        case 'boolean':
+        case 'number':
+        case 'string':
+          throw {
+            status: message.status,
+            statusText: message.statusText,
+            message: value,
+          }
+
+        case 'symbol':
+        case 'undefined':
+        case 'function':
+          throw {
+            status: message.status,
+            statusText: message.statusText,
+            message: 'No message provided.',
+          }
+
+        default:
+          throw {
+            status: message.status,
+            statusText: message.statusText,
+            message: value?.message ?? 'No message provided.',
+          }
       }
   }
 }
