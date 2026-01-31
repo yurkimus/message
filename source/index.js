@@ -1,36 +1,44 @@
-export var Parsers = /** @type {const} */ ([
-  'arrayBuffer',
-  'blob',
-  'bytes',
-  'formData',
-  'json',
-  'text',
-])
+const Parser = /** @type {const} */ ({
+  'arrayBuffer': 'arrayBuffer',
+  'blob': 'blob',
+  'bytes': 'bytes',
+  'formData': 'formData',
+  'json': 'json',
+  'text': 'text',
+})
 
-/**
- * @type {Record<typeof Parsers[number], string[]>}
- */
-export var ParserMimes = {
-  'arrayBuffer': [],
+const ParserMimes = /** @type {const} */ ({
+  [Parser['arrayBuffer']]: [],
 
-  'blob': [],
+  [Parser['blob']]: [],
 
-  'bytes': [],
+  [Parser['bytes']]: [],
 
-  'formData': [
+  [Parser['formData']]: [
     'multipart/form-data',
     'application/x-www-form-urlencoded',
   ],
 
-  'json': [
+  [Parser['json']]: [
     'application/json',
   ],
 
-  'text': [
+  [Parser['text']]: [
     'text/plain',
     'text/html',
   ],
-}
+})
+
+const MimeParser = Object
+  .entries(ParserMimes)
+  .reduce(
+    (object, [parser, mimes]) => {
+      for (let mime of mimes)
+        object[mime] = parser
+      return object
+    },
+    {},
+  )
 
 /**
  * Clone and read the body of HTTP-mesage
@@ -42,14 +50,23 @@ export var ParserMimes = {
  *
  * @returns {Promise<[Message, Result]>}
  */
-export var readMessage = message => {
-  let mime = message.headers.get('Content-Type')?.split(';')?.at(0) ?? ''
+export const readMessage = message => {
+  let mime = message.headers
+    .get('Content-Type')
+    ?.split(';')
+    ?.at(0)
+    ?? ''
 
-  for (let parser of Parsers)
-    if (ParserMimes[parser].some(x => mime.includes(x)))
-      return Promise.all([message, message[parser]()])
+  if (Object.hasOwn(MimeParser, mime))
+    return Promise.all([
+      message,
+      message[MimeParser[mime]](),
+    ])
 
-  return Promise.all([message, message.text()])
+  return Promise.all([
+    message,
+    message.text(),
+  ])
 }
 
 /**
@@ -60,7 +77,7 @@ export var readMessage = message => {
  *
  * @returns {Value}
  */
-export var resolveMessage = ([message, value]) => {
+export const resolveMessage = ([message, value]) => {
   let ok = message?.ok ?? true
 
   switch (ok) {

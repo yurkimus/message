@@ -7,13 +7,5 @@
     "type": "git",
     "url": "https://github.com/yurkimus/message.git"
   },
-  "scripts": {
-    "type": "tsc --emitdeclarationonly --declaration --allowjs ./source/index.js"
-  },
-  "exports": {
-    ".": {
-      "types": "./source/index.d.ts",
-      "default": "./source/index.js"
-    }
-  }
+  "exports": "./source/index.js"
 }
